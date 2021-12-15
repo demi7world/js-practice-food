@@ -103,6 +103,7 @@ window.addEventListener('DOMContentLoaded', () => {
     function openModal() {
         modalWindow.classList.toggle('show');
         document.body.style.overflow = 'hidden'; //removes scrolling of modal
+        clearInterval(modalTimerId);
     };
 
     modalCloseBtn.addEventListener('click', closeModal);
@@ -123,4 +124,16 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal();
         };
     });
+
+    const modalTimerId = setTimeout(openModal, 3000);
+
+    function showModalByScroll() {
+        if(window.pageYOffset + document.documentElement.clientHeight >= 
+            document.documentElement.scrollHeight -1) {//-1px because the bug in some brousers
+                openModal();
+                window.removeEventListener('scroll', showModalByScroll);
+        };
+    };
+
+    window.addEventListener('scroll', showModalByScroll);
 });
