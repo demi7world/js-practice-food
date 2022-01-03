@@ -123,7 +123,7 @@ window.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    const modalTimerId = setTimeout(openModal, 50000);
+    const modalTimerId = setTimeout(openModal, 500000);
 
     function showModalByScroll() {
         if(window.pageYOffset + document.documentElement.clientHeight >= 
@@ -222,7 +222,7 @@ window.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const statusMessage = document.createElement('img');
+            let statusMessage = document.createElement('img');
             statusMessage.src = message.loading;
             statusMessage.style.cssText = `
                 display: block;
@@ -230,20 +230,27 @@ window.addEventListener('DOMContentLoaded', () => {
             `;
             form.insertAdjacentElement('afterend', statusMessage);
 
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
             const formData = new FormData(form);
 
-            request.send(formData);
-            request.addEventListener('load', () => {
-                if (request.status === 200) {
-                    console.log(request.response);
-                    showThanksModal(message.success);
-                    form.reset();
-                    statusMessage.remove();
-                } else {
-                    showThanksModal(message.failure);
-                };
+            const object = {};
+            formData.forEach(function(value, key){
+                object[key] = value;
+            });
+
+            fetch('server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(object)
+            }).then(data => {
+                console.log(data);
+                showThanksModal(message.success);
+                statusMessage.remove();
+            }).catch(() => {
+                showThanksModal(message.failure);
+            }).finally(() => {
+                form.reset();
             });
         });
     };
