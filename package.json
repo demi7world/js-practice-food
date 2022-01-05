@@ -1,0 +1,22 @@
+{
+  "name": "jspracticefood",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demi7world/js_practice_food.git"
+  },
+  "author": "demi7",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/demi7world/js_practice_food/issues"
+  },
+  "homepage": "https://github.com/demi7world/js_practice_food#readme",
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  }
+}
